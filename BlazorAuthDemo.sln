@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34601.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorAuthDemo", "BlazorAuthDemo\BlazorAuthDemo\BlazorAuthDemo.csproj", "{7DE40C73-2374-4ED2-9C04-7050021E47E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorAuthDemo.Client", "BlazorAuthDemo\BlazorAuthDemo.Client\BlazorAuthDemo.Client.csproj", "{0B6D1A42-FEFA-41F3-A0BB-A8524147184B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7DE40C73-2374-4ED2-9C04-7050021E47E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DE40C73-2374-4ED2-9C04-7050021E47E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DE40C73-2374-4ED2-9C04-7050021E47E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DE40C73-2374-4ED2-9C04-7050021E47E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B6D1A42-FEFA-41F3-A0BB-A8524147184B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B6D1A42-FEFA-41F3-A0BB-A8524147184B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B6D1A42-FEFA-41F3-A0BB-A8524147184B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B6D1A42-FEFA-41F3-A0BB-A8524147184B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {80C3304C-B3E0-429F-9A80-12B4AAD95DE6}
+	EndGlobalSection
+EndGlobal

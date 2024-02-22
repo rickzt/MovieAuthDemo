@@ -1,0 +1,98 @@
+﻿@page "/movies"
+
+@using BlazorAuthDemo.Classes
+@using System.Security.Claims
+@using BlazorAuthDemo.Data
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore
+
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject ApplicationDbContext db
+@inject UserManager<ApplicationUser> UserManager
+@rendermode InteractiveServer
+
+<h3>MovieRent</h3>
+<p>List of movies:</p>
+<div>
+    @foreach(var movie in Movies)
+    {
+        <p>@movie.Title</p>
+        <button @onclick="(()=>AddToCart(movie))">Add</button>
+    }
+</div>
+
+<br />
+<br />
+<br />
+<p>Shoppingcart:</p>
+<div>
+    @foreach (var movie in ShoppingCart)
+    {
+        <p>@movie.Title</p>
+    }
+</div>
+
+@code {
+    public List<Movie> Movies = new();
+    public string UserId;
+    public List<Movie>? ShoppingCart = new();
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        UserId = authState.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        var moviesFromDb = await db.Movies.ToListAsync();
+        Movies = moviesFromDb;
+
+        ShoppingCart = await DisplayCart();
+    }
+
+    public async Task AddToCart(Movie movie)
+    {
+        var user = await UserManager.FindByIdAsync(UserId);
+        if (user.Cart == null)
+        {
+            var newCart = new ShoppingCart
+                {
+                    Id = UserId,
+                    ShoppingCarts = new List<MovieShoppingCart>()
+                };
+            await db.Carts.AddAsync(newCart);
+            await db.SaveChangesAsync();
+        }
+
+        var newMovieToRent = new MovieShoppingCart
+            {
+                Movie = movie,
+                Cart = user.Cart
+            };
+        await db.MovieShoppingCarts.AddAsync(newMovieToRent);
+        await db.SaveChangesAsync();
+        ShoppingCart = await DisplayCart();
+    }
+
+    public async Task<List<Movie>> DisplayCart()
+    {
+        var user = await UserManager.Users
+        .Include(x => x.Cart)
+        .FirstOrDefaultAsync(x => x.Id == UserId);
+
+        if (user.Cart != null)
+        {
+            var movieIds =  db.MovieShoppingCarts
+            .Where(x => x.ShoppingCartId == user.Cart.Id)
+            .Select(x => x.MovieId)
+            .ToList();
+
+            var movies = db.Movies
+            .Where(x => movieIds.Contains(x.Id))
+            .ToList();
+
+            return movies;
+        }
+        return new List<Movie>();
+    }
+}
